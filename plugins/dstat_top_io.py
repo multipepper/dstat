@@ -26,9 +26,9 @@ class dstat_plugin(dstat):
             try:
                 ### Reset values
                 if pid not in self.pidset2:
-                    self.pidset2[pid] = {'rchar:': 0, 'wchar:': 0}
+                    self.pidset2[pid] = {'read_bytes:': 0, 'write_bytes:': 0}
                 if pid not in self.pidset1:
-                    self.pidset1[pid] = {'rchar:': 0, 'wchar:': 0}
+                    self.pidset1[pid] = {'read_bytes:': 0, 'write_bytes:': 0}
 
                 ### Extract name
                 name = proc_splitline('/proc/%s/stat' % pid)[1][1:-1]
@@ -42,8 +42,8 @@ class dstat_plugin(dstat):
             except IndexError:
                 continue
 
-            read_usage = (self.pidset2[pid]['rchar:'] - self.pidset1[pid]['rchar:']) * 1.0 / elapsed
-            write_usage = (self.pidset2[pid]['wchar:'] - self.pidset1[pid]['wchar:']) * 1.0 / elapsed
+            read_usage = (self.pidset2[pid]['read_bytes:'] - self.pidset1[pid]['read_bytes:']) * 1.0 / elapsed
+            write_usage = (self.pidset2[pid]['write_bytes:'] - self.pidset1[pid]['write_bytes:']) * 1.0 / elapsed
             usage = read_usage + write_usage
 #            if usage > 0.0:
 #                print('%s %s:%s' % (pid, read_usage, write_usage))
